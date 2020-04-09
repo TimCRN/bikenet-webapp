@@ -65,6 +65,10 @@
                 }
             }
         },
+        mounted() {
+            this.email = 'sjeng@gmail.com'
+            this.password = '12345678'
+        },
         beforeRouteEnter (to, from, next) {
             if (window.Laravel.isLoggedin) {
                 return next('dashboard');

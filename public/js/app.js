@@ -2117,6 +2117,10 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
+  mounted: function mounted() {
+    this.email = 'sjeng@gmail.com';
+    this.password = '12345678';
+  },
   beforeRouteEnter: function beforeRouteEnter(to, from, next) {
     if (window.Laravel.isLoggedin) {
       return next('dashboard');
