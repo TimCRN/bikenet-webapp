@@ -15,6 +15,9 @@ class CreatePositionUpdatesTable extends Migration
     {
         Schema::create('position_updates', function (Blueprint $table) {
             $table->id();
+            $table->integer('bike');
+            $table->double('latitude');
+            $table->double('longtitude');
             $table->timestamps();
         });
     }
