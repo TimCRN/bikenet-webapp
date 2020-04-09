@@ -39,7 +39,11 @@
         },
         methods: {
             logout(){
-                axios.get('api/logout')
+                axios.get('api/logout').then(response => {
+                    if (response.status === 200) {
+                        this.$router.go('/');
+                    }
+                })
             }
         },
         mounted(){
