@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('login', 'UserController@login');
+Route::post('login', 'UserController@login')->name('login');
 Route::post('register', 'UserController@register');
 
 Route::get('logout', 'UserController@logout');
@@ -23,4 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('bikes', 'BikeController')->middleware('auth:sanctum');
+Route::resource('bikes', 'BikeController');
