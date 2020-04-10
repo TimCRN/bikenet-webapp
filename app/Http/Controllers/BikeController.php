@@ -6,9 +6,15 @@ use App\Bike;
 use App\Booking;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class BikeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +22,8 @@ class BikeController extends Controller
      */
     public function index()
     {
-        // test
+        $availableBikes = Bike::where('available', true)->get();
+        return response($availableBikes->toJson(), response::HTTP_OK);
     }
 
     /**
