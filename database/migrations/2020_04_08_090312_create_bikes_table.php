@@ -17,7 +17,7 @@ class CreateBikesTable extends Migration
             $table->id();
             $table->string('name');
             $table->boolean('available')->default(true);
-            $table->integer('zoneId');
+            $table->integer('zoneId')->default(0);
             $table->timestamps();
         });
     }
