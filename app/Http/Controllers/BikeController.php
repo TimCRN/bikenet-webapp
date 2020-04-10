@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Bike;
+use App\Booking;
+use App\User;
 use Illuminate\Http\Request;
 
 class BikeController extends Controller
@@ -81,5 +83,39 @@ class BikeController extends Controller
     public function destroy(Bike $bike)
     {
         //
+    }
+
+    public function getNearest()
+    {
+        // return bike with smallest distance to user
+    }
+
+    public function getAvailable()
+    {
+        return Bike::all()->where('available', true);
+    }
+
+    public function book(Bike $bike, User $user)
+    {
+        $bike->available = false;
+        $bike->save();
+
+        $booking = new Booking([
+            'bike_id' => $bike->id,
+            'user_id' => $user->id,
+            //TODO Change start_position
+            'start_position' => 'user position'
+        ]);
+        $booking->save();
+    }
+
+    public function unBook(Bike $bike)
+    {
+        $bike->available = true;
+        $bike->save();
+
+        $booking = Booking::where('bike_id', $bike->id)->first();
+        $booking->completed = true;
+        $booking->save();
     }
 }
