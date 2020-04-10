@@ -1915,63 +1915,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      task: null,
-      tasks: null
+      bikes: []
     };
   },
+  created: function created() {
+    this.getBikes();
+  },
   methods: {
-    //we submit the task to the add-task api then clear the input field
-    submit: function submit() {
+    getBikes: function getBikes() {
       var _this = this;
 
-      axios.post('api/add-task', {
-        task: this.task
-      }).then(function (response) {
-        _this.task = null;
-      })["catch"](function (error) {});
-    },
-    getTask: function getTask() {
-      var _this2 = this;
-
-      axios.get('api/get-task').then(function (response) {
-        _this2.tasks = response.data.tasks;
+      axios.get('/api/bikes').then(function (response) {
+        _this.bikes = response.data;
+      })["catch"](function (err) {
+        return console.log(err);
       });
     }
-  },
-  watch: {
-    // whenever task changes, this function will run
-    task: function task(newTask, oldTask) {
-      this.getTask();
-    }
-  },
-  created: function created() {
-    this.getTask();
-  },
-  //before the route is mounted we check if the user is logged in
-  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
-    if (!window.Laravel.isLoggedin) {
-      return next('/');
-    }
-
-    next();
   }
 });
 
@@ -38340,68 +38302,18 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("div", { staticClass: "card card-default" }, [
-          _c("div", { staticClass: "card-header" }, [_vm._v("Add Task")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.task,
-                  expression: "task"
-                }
-              ],
-              staticClass: "form-control",
-              domProps: { value: _vm.task },
-              on: {
-                keyup: function($event) {
-                  if (
-                    !$event.type.indexOf("key") &&
-                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                  ) {
-                    return null
-                  }
-                  return _vm.submit($event)
-                },
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.task = $event.target.value
-                }
-              }
-            })
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [_vm._v("All Tasks")]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "card-body" },
-            _vm._l(_vm.tasks, function(task, id) {
-              return _c(
-                "li",
-                { key: id, staticStyle: { "list-style": "none" } },
-                [_vm._v(_vm._s(task.task))]
-              )
-            }),
-            0
-          )
-        ])
-      ])
-    ])
-  ])
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "row justify-content-center" })
+    ])
+  }
+]
 render._withStripped = true
 
 
