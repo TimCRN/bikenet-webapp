@@ -1,13 +1,13 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center">
-            <BikeComponent v-for="bike in bikes" :key="bike.id" :name="bike.name"/>
-        </div>
+
+        <BikeTable @refresh="getBikes()" :bikes=bikes></BikeTable>
+
     </div>
 </template>
 
 <script>
-    import BikeComponent from '../components/BikeComponent.vue'
+    import BikeTable from '../components/BikeTableComponent.vue'
 
     export default {
         data() {
@@ -17,7 +17,7 @@
         },
 
         components: {
-            BikeComponent
+            BikeTable
         },
 
         created() {
