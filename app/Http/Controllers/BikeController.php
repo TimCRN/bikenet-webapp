@@ -23,7 +23,7 @@ class BikeController extends Controller
     public function index()
     {
         $availableBikes = Bike::where('available', true)->get();
-        return response($availableBikes->toJson(), response::HTTP_OK);
+        return response($availableBikes->toJson());
     }
 
     /**
@@ -95,11 +95,6 @@ class BikeController extends Controller
     public function getNearest()
     {
         // return bike with smallest distance to user
-    }
-
-    public function getAvailable()
-    {
-        return Bike::all()->where('available', true);
     }
 
     public function book(Bike $bike, User $user)
