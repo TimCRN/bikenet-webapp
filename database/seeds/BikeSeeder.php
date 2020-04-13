@@ -11,8 +11,10 @@ class BikeSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('bikes')->insert([
-            'name' => 'John Deere'
-        ]);
+        // DB::table('bikes')->insert([
+        //     'name' => 'John Deere'
+        // ]);
+
+        factory(App\Bike::class, 50)->create();
     }
 }
