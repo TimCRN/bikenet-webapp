@@ -18,7 +18,7 @@ class BookingPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return ($user->role >= 1);
     }
 
     /**
@@ -30,7 +30,7 @@ class BookingPolicy
      */
     public function view(User $user, Booking $booking)
     {
-        //
+        return ($user->role >= 1 or $booking->user_id === $user->id);
     }
 
     /**
@@ -41,7 +41,7 @@ class BookingPolicy
      */
     public function create(User $user)
     {
-        //
+        return ($user->role >= 1);
     }
 
     /**
@@ -53,7 +53,7 @@ class BookingPolicy
      */
     public function update(User $user, Booking $booking)
     {
-        //
+        return ($user->role >= 1);
     }
 
     /**
@@ -65,7 +65,7 @@ class BookingPolicy
      */
     public function delete(User $user, Booking $booking)
     {
-        //
+        return ($user->role >= 1 and $booking->completed);
     }
 
     /**
@@ -77,7 +77,7 @@ class BookingPolicy
      */
     public function restore(User $user, Booking $booking)
     {
-        //
+        return ($user->role >= 1);
     }
 
     /**
@@ -89,6 +89,6 @@ class BookingPolicy
      */
     public function forceDelete(User $user, Booking $booking)
     {
-        //
+        return ($user->role >= 1);
     }
 }
