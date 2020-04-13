@@ -19,7 +19,7 @@ class BookingController extends Controller
      */
     public function index()
     {
-        return response()->json(Booking::all()->toJson());
+        return response()->json(Booking::all());
     }
 
     /**
@@ -55,7 +55,7 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        return response()->json($booking->toJson());
+        return response()->json($booking);
     }
 
     /**

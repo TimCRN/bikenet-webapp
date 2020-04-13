@@ -22,7 +22,7 @@ class BikeController extends Controller
     public function index()
     {
         $availableBikes = Bike::where('available', true)->get();
-        return response()->json($availableBikes->toJson());
+        return response()->json($availableBikes);
     }
 
     /**
@@ -70,7 +70,7 @@ class BikeController extends Controller
      */
     public function show(Bike $bike)
     {
-        return response()->json($bike->toJson());
+        return response()->json($bike);
     }
 
     /**
