@@ -17,7 +17,7 @@ class CreatePositionUpdatesTable extends Migration
             $table->id();
             $table->foreignId('bike_id');
             $table->double('latitude');
-            $table->double('longtitude');
+            $table->double('longitude');
             $table->timestamps();
         });
     }
