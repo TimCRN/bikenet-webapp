@@ -15,4 +15,9 @@ class Bike extends Model
     {
         return $this->bookings()->where('completed', '0');
     }
+
+    public function position()
+    {
+        return $this->hasOne('App\PositionUpdate');
+    }
 }
