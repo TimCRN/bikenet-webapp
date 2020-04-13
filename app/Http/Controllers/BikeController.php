@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Bike;
-use App\Booking;
-use App\User;
+use App\PositionUpdate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -18,22 +17,12 @@ class BikeController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
         $availableBikes = Bike::where('available', true)->get();
-        return response($availableBikes->toJson());
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json($availableBikes->toJson());
     }
 
     /**
@@ -44,29 +33,44 @@ class BikeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $b = new Bike([
+            'name' => $request.name
+        ]);
+
+        try {
+            $b->save();
+        }
+        catch (\Throwable $exception){
+            report($exception);
+            return response('Bike could not be created', 500);
+        }
+
+        $p = new PositionUpdate([
+            'bike_id' => $b->id,
+            'latitude' => $request.lat,
+            'longitude' => $request.lon
+        ]);
+
+        try {
+            $p->save();
+        }
+        catch (\Throwable $exception){
+            report($exception);
+            return response('Position Update could not be created', 500);
+        }
+
+        return response('Bike created');
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \App\Bike  $bike
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Bike $bike)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Bike  $bike
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Bike $bike)
-    {
-        //
+        return response()->json($bike->toJson());
     }
 
     /**
@@ -89,35 +93,15 @@ class BikeController extends Controller
      */
     public function destroy(Bike $bike)
     {
-        //
-    }
+        try {
+            $bike->delete();
+        }
+        catch (\Throwable $exception)
+        {
+            report($exception);
+            return response('Bike could not be deleted', 500);
+        }
 
-    public function getNearest()
-    {
-        // return bike with smallest distance to user
-    }
-
-    public function book(Bike $bike, User $user)
-    {
-        $bike->available = false;
-        $bike->save();
-
-        $booking = new Booking([
-            'bike_id' => $bike->id,
-            'user_id' => $user->id,
-            //TODO Change start_position
-            'start_position' => 'user position'
-        ]);
-        $booking->save();
-    }
-
-    public function unBook(Bike $bike)
-    {
-        $bike->available = true;
-        $bike->save();
-
-        $booking = Booking::where('bike_id', $bike->id)->first();
-        $booking->completed = true;
-        $booking->save();
+        return response('Bike has been deleted');
     }
 }
