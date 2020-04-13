@@ -18,7 +18,7 @@ class BikePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return ($user->role >= 1);
     }
 
     /**
@@ -30,7 +30,7 @@ class BikePolicy
      */
     public function view(User $user, Bike $bike)
     {
-        //
+        return ($user->role >= 1 or $bike->available);
     }
 
     /**
@@ -41,7 +41,7 @@ class BikePolicy
      */
     public function create(User $user)
     {
-        //
+        return ($user->role >= 1);
     }
 
     /**
@@ -53,7 +53,7 @@ class BikePolicy
      */
     public function update(User $user, Bike $bike)
     {
-        //
+        return ($user->role >= 1);
     }
 
     /**
@@ -65,7 +65,7 @@ class BikePolicy
      */
     public function delete(User $user, Bike $bike)
     {
-        //
+        return ($user->role >= 1);
     }
 
     /**
@@ -77,7 +77,7 @@ class BikePolicy
      */
     public function restore(User $user, Bike $bike)
     {
-        //
+        return ($user->role >= 1);
     }
 
     /**
@@ -89,6 +89,6 @@ class BikePolicy
      */
     public function forceDelete(User $user, Bike $bike)
     {
-        //
+        return ($user->role >= 1);
     }
 }
