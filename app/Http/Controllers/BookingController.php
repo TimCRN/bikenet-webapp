@@ -31,9 +31,9 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         $b = new Booking([
-            'user_id' => $request.user_id,
-            'bike_id' => $request.bike_id,
-            'start_position' => $request.position,
+            'user_id' => $request->user_id,
+            'bike_id' => $request->bike_id,
+            'start_position' => $request->position,
         ]);
 
         try {
@@ -68,15 +68,15 @@ class BookingController extends Controller
     public function update(Request $request, Booking $booking)
     {
         try {
-            $booking->end_position = $request.position;
-            $booking->completed = true;
+            $booking->end_position = $request->position;
+            $booking->status = $request->status;
         }
         catch (\Throwable $exception){
             report($exception);
             return response('Booking could not be updated', 500);
         }
 
-        return response('Booking has been updated');
+        return response()->setStatusCode(200);
 
     }
 
@@ -97,6 +97,6 @@ class BookingController extends Controller
             return response('Booking could not be deleted', 500);
         }
 
-        return response('Booking has been deleted');
+        return response()->setStatusCode(200);
     }
 }

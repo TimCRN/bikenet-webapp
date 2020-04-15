@@ -34,7 +34,7 @@ class BikeController extends Controller
     public function store(Request $request)
     {
         $b = new Bike([
-            'name' => $request.name
+            'name' => $request->name
         ]);
 
         try {
