@@ -18,6 +18,6 @@ class Bike extends Model
 
     public function position()
     {
-        return $this->hasOne('App\PositionUpdate');
+        return $this->hasOne('App\PositionUpdate')->latest();
     }
 }
