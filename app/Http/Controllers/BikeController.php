@@ -21,7 +21,7 @@ class BikeController extends Controller
      */
     public function index()
     {
-        $availableBikes = Bike::where('available', true)->get();
+        $availableBikes = Bike::where('available', true)->with('position')->get();
         return response()->json($availableBikes);
     }
 
@@ -45,19 +45,19 @@ class BikeController extends Controller
             return response('Bike could not be created', 500);
         }
 
-        $p = new PositionUpdate([
-            'bike_id' => $b->id,
-            'latitude' => $request.lat,
-            'longitude' => $request.lon
-        ]);
-
-        try {
-            $p->save();
-        }
-        catch (\Throwable $exception){
-            report($exception);
-            return response('Position Update could not be created', 500);
-        }
+//        $p = new PositionUpdate([
+//            'bike_id' => $b->id,
+//            'latitude' => $request.lat,
+//            'longitude' => $request.lon
+//        ]);
+//
+//        try {
+//            $p->save();
+//        }
+//        catch (\Throwable $exception){
+//            report($exception);
+//            return response('Position Update could not be created', 500);
+//        }
 
         return response('Bike created');
     }
