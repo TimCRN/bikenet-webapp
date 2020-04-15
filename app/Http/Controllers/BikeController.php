@@ -58,8 +58,7 @@ class BikeController extends Controller
 //            report($exception);
 //            return response('Position Update could not be created', 500);
 //        }
-
-        return response('Bike created');
+        return response()->setStatusCode(200);
     }
 
     /**
@@ -102,6 +101,6 @@ class BikeController extends Controller
             return response('Bike could not be deleted', 500);
         }
 
-        return response('Bike has been deleted');
+        return response()->setStatusCode(200);
     }
 }
