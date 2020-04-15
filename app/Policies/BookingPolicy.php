@@ -41,7 +41,7 @@ class BookingPolicy
      */
     public function create(User $user)
     {
-        return ($user->role >= 1);
+        return ($user->role >= 0);
     }
 
     /**
@@ -53,7 +53,7 @@ class BookingPolicy
      */
     public function update(User $user, Booking $booking)
     {
-        return ($user->role >= 1);
+        return ($user->role >= 0);
     }
 
     /**
