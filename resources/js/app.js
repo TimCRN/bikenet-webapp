@@ -9,6 +9,18 @@ import VueAxios from 'vue-axios';
 import axios from 'axios';
 Vue.use(VueAxios, axios);
 
+import VueToasted from 'vue-toasted';
+Vue.use(VueToasted, {
+    duration: 3000,
+    position: 'top-right',
+    action: {
+        text: 'ok',
+        onClick: (e, toastObject) => {
+            toastObject.goAway(0)
+        }
+    }
+})
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
