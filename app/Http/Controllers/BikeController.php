@@ -6,6 +6,8 @@ use App\Bike;
 use App\PositionUpdate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
+use Carbon\Carbon;
 
 class BikeController extends Controller
 {
@@ -21,6 +23,25 @@ class BikeController extends Controller
      */
     public function index()
     {
+        // $availableBikes = Bike::where('available', true)->with('position')->get();
+        // return response()->json($availableBikes);
+        
+        $response = Http::get('localhost:80/status')->json();
+
+        Bike::updateOrCreate(
+            ['id'   => $response['bike']],
+            ['name' => 'john']
+        );
+
+        PositionUpdate::create([
+            'bike_id' => $response['bike'],
+            'latitude' => $response['latitude'],
+            'longitude' => $response['longitude'],
+            'created_at' => Carbon::now()->toDateTimeString()
+        ])->save();
+
+        
+
         $availableBikes = Bike::where('available', true)->with('position')->get();
         return response()->json($availableBikes);
     }
