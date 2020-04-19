@@ -1,6 +1,8 @@
 <template>
     <div class="container">
 
+        <ConfirmModal @submit="reserveBike()" @close="closeModal()"/>
+
         <GmapMap :center="{lat: 1.38, lng: 102.8}" :zoom="12" style="width: 100%; height: 800px">
             <gmap-marker 
             v-for="bike in bikePositions" 
@@ -17,11 +19,24 @@
 </template>
 
 <script>
+import ConfirmModal from '../components/ConfirmationModalComponent.vue'
+
     export default {
         data() {
             return {
                 bikes: []
             };
+        },
+
+        components: [
+            ConfirmModal
+        ],
+
+        data() {
+            return {
+                selectedBike: null,
+                showModal: false
+            }
         },
 
         created() {
@@ -36,7 +51,8 @@
                     })
                     .catch(err => console.log(err));
             },
-            reserveBike(bike) {
+            reserveBike() {
+                let bike = this.selectedBike
                 axios.post('/api/bookings', {
                     bike_id: bike.id,
                     user_id: window.Laravel.user.id
@@ -45,6 +61,14 @@
                         console.log(response)
                         this.$toasted.show(response.data)
                     })
+                this.closeModal()
+            },
+            openModal(bike) {
+                this.selectedBike = bike
+                this.showModal = true
+            },
+            closeModal() {
+                this.showModal = false
             }
         },
 
