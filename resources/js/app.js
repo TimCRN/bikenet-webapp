@@ -21,6 +21,14 @@ Vue.use(VueToasted, {
     }
 })
 
+import * as VueGoogleMaps from 'vue2-google-maps';
+Vue.use(VueGoogleMaps, {
+    load: {
+        key: 'AIzaSyDziXQSn8g9ZGIO3plOnwCeuORZ1nFcsqU',
+    },
+    installComponents: true
+})
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
