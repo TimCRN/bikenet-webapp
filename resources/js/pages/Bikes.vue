@@ -8,6 +8,7 @@
             :position="{lat: parseFloat(bike.position.latitude), lng: parseFloat(bike.position.longitude)}" 
             :title="bike.name"
             :label="bike.name"
+            @click="reserveBike(bike)"
             />
         </GmapMap>
         
@@ -34,6 +35,16 @@
                         this.bikes = response.data
                     })
                     .catch(err => console.log(err));
+            },
+            reserveBike(bike) {
+                axios.post('/api/bookings', {
+                    bike_id: bike.id,
+                    user_id: window.Laravel.user.id
+                })
+                    .finally(response => {
+                        console.log(response)
+                        this.$toasted.show(response.data)
+                    })
             }
         },
 
