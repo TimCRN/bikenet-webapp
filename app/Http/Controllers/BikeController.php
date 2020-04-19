@@ -25,7 +25,7 @@ class BikeController extends Controller
     {
         // $availableBikes = Bike::where('available', true)->with('position')->get();
         // return response()->json($availableBikes);
-        
+
         $response = Http::get('localhost:80/status')->json();
 
         Bike::updateOrCreate(
@@ -40,7 +40,7 @@ class BikeController extends Controller
             'created_at' => Carbon::now()->toDateTimeString()
         ])->save();
 
-        
+
 
         $availableBikes = Bike::where('available', true)->with('position')->get();
         return response()->json($availableBikes);

@@ -24,3 +24,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('bikes', 'BikeController');
+
+Route::resource('bookings', 'BookingController');

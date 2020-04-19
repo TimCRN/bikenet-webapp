@@ -3,11 +3,8 @@
         <div class="content">
             <div  class="m-b-md">
                 <h2 class="title m-b-md">
-                    Laravel Airlock
+                    BikeNet WebApp
                 </h2>
-                <h3>
-                    Your safety is our joy
-                </h3>
             </div>
         </div>
     </div>
