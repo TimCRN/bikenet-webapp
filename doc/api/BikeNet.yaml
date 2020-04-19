@@ -1,0 +1,256 @@
+openapi: 3.0.0
+info:
+  description: BikeNet API documenation
+  version: "1.0.0"
+  title: BikeNet API
+tags:
+  - name: Bikes
+    description: 'endpoints for managing Bikes'
+paths:
+  /bikes:
+    get:
+      summary: Get a list of all bikes
+      tags:
+        - Bikes
+      parameters:
+        - in: query
+          name: searchString
+          description: used to lookup a record
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: skip
+          description: maximum number of records to return
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+        - in: query
+          name: limit
+          description: maximum number of records to return
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 50
+      responses:
+        '200':
+          description: succesfull query
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bike'
+    post:
+      summary: 'create a new bike'
+      tags:
+        - Bikes
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+            format: name
+        - in: query
+          name: zoneId
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: 'Bike succesfully created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bike'
+    
+      
+  /bikes/{bikeId}:
+    get:
+      summary: returns a specific bike
+      tags:
+        - Bikes
+      parameters:
+        - in: path
+          name: bikeId
+          description: 'the id of the Bike to return'
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: succesfull query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bike'
+    put:
+      summary: Change a Bike
+      tags:
+        - Bikes
+      parameters:
+        - in: path
+          name: bikeId
+          description: 'the id of the Bike to change'
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: name
+          description: 'the name of the Bike'
+          required: false
+          schema:
+            type: string
+            format: name
+        - in: query
+          name: available
+          description: 'whether the Bike is available for Bookings'
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: zoneId
+          description: 'the zoneId of the Bike'
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: 'Bike changed succesfully'
+    delete:
+      summary: Delete a Bike
+      tags:
+        - Bikes
+      parameters:
+        - in: path
+          name: bikeId
+          description: 'the id of the Bike to delete'
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: 'Bike deleted succesfully'
+
+
+
+components:
+  schemas:
+    Bike:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          format: name
+        available:
+          type: boolean
+        zoneId:
+          type: string
+          format: uuid
+          
+    Zone:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: 'Amsterdam'
+        parentZone:
+          type: string
+          format: uuid
+          description: "the parent Zone's id"
+        maxSpeed:
+          type: integer
+          minimum: 0
+          maximum: 50
+        parkingAllowed:
+          type: boolean
+        area:
+          $ref: '#/components/schemas/Area'
+        
+    Area:
+      description: 'An array with four Positions'
+      type: array
+      minItems: 4
+      maxItems: 4
+      items:
+        $ref: '#/components/schemas/Position'
+        
+    Position:
+      type: object
+      properties:
+        latitude:
+          type: number
+        longtitude:
+          type: number
+          
+    Booking:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        bike:
+          type: string
+          format: uuid
+          description: 'the id of the related Bike'
+        user:
+          type: string
+          format: uuid
+          description: 'the id of the related User'
+        completed:
+          type: boolean
+          description: 'whether the Booking is completed'
+        start:
+          $ref: '#/components/schemas/Position'
+        end:
+          $ref: '#/components/schemas/Position'
+    
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          format: name
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+    
+    PositionUpdate:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        bike:
+          type: string
+          format: uuid
+          description: 'the related Bike'
+        position:
+          $ref: '#/components/schemas/Position'
+        datetime:
+          type: string
+          format: date-time
+# Added by API Auto Mocking Plugin
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/Accendit/Bike/1.0.0
