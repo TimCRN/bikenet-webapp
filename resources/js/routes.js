@@ -4,6 +4,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import Home from './pages/Home';
+import Bikes from './pages/Bikes'
 
 Vue.use(VueRouter);
 
@@ -30,6 +31,11 @@ let router = new VueRouter({
             name: 'dashboard',
             component: Dashboard,
         },
+        {
+            path: '/bikes',
+            name: 'bikes',
+            component: Bikes,
+        }
     ]
 });
 
