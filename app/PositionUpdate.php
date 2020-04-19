@@ -16,6 +16,6 @@ class PositionUpdate extends Model
     ];
 
     protected $hidden = [
-        'id'        
+        'id'
     ];
 }

@@ -17,9 +17,7 @@ class CreateBookingsTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('bike_id');
-            $table->double('start_position');
-            $table->double('end_position')->nullable();
-            $table->boolean('status')->default(false);
+            $table->boolean('completed')->default(false);
             $table->timestamps();
         });
     }
